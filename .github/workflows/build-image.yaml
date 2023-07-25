@@ -6,6 +6,11 @@ on:
       name:
         description: "Image name"
         type: string
+      build_args:
+        description: "Build args for docker build"
+        type: string
+        required: false
+        default: ""
     outputs:
       image:
         description: "Image uri"
@@ -34,7 +39,10 @@ jobs:
 
       - name: Build image
         run: |
-          docker build . --file Dockerfile --tag $IMAGE_NAME \
+          build_args="${{ input.build_args }}"
+          echo "Build args: ${build_args}"
+          
+          docker build . --file Dockerfile ${build_args} --tag $IMAGE_NAME \
             --label "runnumber=${GITHUB_RUN_ID}" \
             --label "org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}"
 
