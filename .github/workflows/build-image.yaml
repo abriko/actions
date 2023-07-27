@@ -39,7 +39,7 @@ jobs:
 
       - name: Build image
         run: |
-          build_args="${{ input.build_args }}"
+          build_args="${{ inputs.build_args }}"
           echo "Build args: ${build_args}"
           
           docker build . --file Dockerfile ${build_args} --tag $IMAGE_NAME \
